@@ -24,6 +24,7 @@ public class ParcoursControler {
 	private ParcoursService parcoursService;
 	@Autowired
 	private CoordParcoursService coordParcoursService;
+
 	/**
 	 * Create - Add a new employee
 	 * @param employee An object employee
@@ -102,7 +103,6 @@ public class ParcoursControler {
 	 */
 	@DeleteMapping("/parcours/{id}")
 	public void deleteParcours(@PathVariable("id") final Long id) {
-		coordParcoursService.deleteCoordonnees(id);
 		parcoursService.deleteParcours(id);
 	}
 	

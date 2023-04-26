@@ -1,6 +1,9 @@
 package com.api.model;
 
 
+import java.util.UUID;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +17,8 @@ import javax.persistence.ManyToOne;
 public class CoordonneesEtape {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
-    //private Long id;
+    private Long id;
+	
     private Double latitude;
     private Double longitude;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,14 +26,14 @@ public class CoordonneesEtape {
     private Etape etape;
 
 
-    /*public Long getId() {
+    public Long getId() {
     	return id;
         
     }
 
     public void setId(Long id) {
         this.id = id;
-    }*/
+    }
     
 	public Double getLatitude() {
 		return latitude;
@@ -50,6 +54,10 @@ public class CoordonneesEtape {
 	public void setEtape(Etape etape) {
 		this.etape = etape;
 	}
-
+	
+	public Etape getEtape() {
+		return this.etape;
+	}
+	
     
 }

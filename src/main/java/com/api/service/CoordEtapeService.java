@@ -28,13 +28,16 @@ public class CoordEtapeService {
 	}
 	
 	@Transactional
-	public void deleteCoordonnees(final Long parcoursId) {
-		coordEtapeRepository.deleteByEtapeId(parcoursId);
+	public void deleteCoordonnees(final Long etapeId) {
+		System.out.println("Suppression coordonnes");
+		System.out.println(etapeId);
+		coordEtapeRepository.deleteByEtapeId(etapeId);
 	}
 	
 	public List<CoordonneesEtape> saveCoordonnees(List<CoordonneesEtape> coordonnees) {
 		List<CoordonneesEtape> savedCoords = (List<CoordonneesEtape>) coordEtapeRepository.saveAll(coordonnees);
 		return savedCoords;
 	}
+	
 
 }

@@ -51,7 +51,8 @@ public class CoordEtapeControler {
 	 * Delete - Delete an employee
 	 * @param id - The id of the employee to delete
 	 */
-	public void deleteCoordonnees( final Long id) {
+	public void deleteCoordonnees(final Long id) {
+		
 		coordEtapeService.deleteCoordonnees(id);
 	}
 }

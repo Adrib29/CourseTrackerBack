@@ -83,7 +83,7 @@ public class EtapeControler {
 	 * @param employee - The employee object updated
 	 * @return
 	 */
-	@PutMapping("/etape/{etapeId}")
+	@PutMapping("parcours/{parcoursId}/etape/{etapeId}")
 	public Etape updateEtape(@PathVariable("etapeId") final Long etapeId, @RequestBody Etape etape) {
 		Optional<Etape> e = etapeService.getEtape(etapeId);
 		if(e.isPresent()) {
@@ -115,7 +115,7 @@ public class EtapeControler {
 	 */
 	@DeleteMapping("/etape/{id}")
 	public void deleteParcours(@PathVariable("id") final Long id) {
-		coordEtapeService.deleteCoordonnees(id);
+
 		etapeService.deleteEtape(id);
 	}
 	

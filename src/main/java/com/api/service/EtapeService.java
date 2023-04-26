@@ -11,12 +11,16 @@ import com.api.repository.EtapeRepository;
 
 import lombok.Data;
 
+
 @Data
 @Service
 public class EtapeService {
 	
 	@Autowired
 	private EtapeRepository etapeRepository;
+	
+	@Autowired
+	private CoordEtapeService coordEtapeService;
 	
 	public Optional<Etape> getEtape(final Long id) {
 		return etapeRepository.findById(id);
@@ -28,6 +32,9 @@ public class EtapeService {
 	
 	@Transactional	
 	public void deleteEtape(final Long id) {
+		//Suppression des coordonées de l'étape
+		coordEtapeService.deleteCoordonnees(id);
+		
 		etapeRepository.deleteByEtapeId(id);
 	}
 	

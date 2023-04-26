@@ -14,7 +14,8 @@ import javax.persistence.ManyToOne;
 public class Coordonnees {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
-    //private Long id;
+    private Long id;
+	
     private Double latitude;
     private Double longitude;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,14 +23,14 @@ public class Coordonnees {
     private Parcours parcours;
 
 
-    /*public Long getId() {
+    public Long getId() {
     	return id;
         
     }
 
     public void setId(Long id) {
         this.id = id;
-    }*/
+    }
     
 	public Double getLatitude() {
 		return latitude;

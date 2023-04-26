@@ -18,6 +18,7 @@ public class Etape {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long etapeId;
+	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parcoursId")
     private Parcours parcours;
