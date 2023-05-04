@@ -103,6 +103,10 @@ public class EtapeControler {
 				System.out.println("saved");
 				currentEtape.setDistance(etape.getDistance());
 			}
+			
+			currentEtape.setStartDate(etape.getStartDate());
+			currentEtape.setEndDate(etape.getEndDate());
+			
 			etapeService.saveEtape(currentEtape);
 			return currentEtape;
 			
