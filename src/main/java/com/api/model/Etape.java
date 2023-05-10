@@ -1,7 +1,8 @@
 package com.api.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,8 +22,11 @@ public class Etape {
     private Long etapeId;
     private Double distance; //(en km)
 	
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    
+    private Long duree; //(en min)
+    private Double vitesse; //(en km/h)
     
     @OneToMany(mappedBy = "etape", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CoordonneesEtape> coordonneesList = new ArrayList<>();
@@ -62,20 +66,36 @@ public class Etape {
 		this.distance = distance;
 	}
 	
-	public Date getStartDate() {
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
+	}
+
+	public Long getDuree() {
+		return duree;
+	}
+
+	public void setDuree(Long duree) {
+		this.duree = duree;
+	}
+
+	public Double getVitesse() {
+		return vitesse;
+	}
+
+	public void setVitesse(Double vitesse) {
+		this.vitesse = vitesse;
 	}
 
 }

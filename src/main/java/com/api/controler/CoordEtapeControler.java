@@ -13,23 +13,12 @@ public class CoordEtapeControler {
 	private CoordEtapeService coordEtapeService;
 	
 	/**
-	 * Create - Add a new employee
-	 * @param employee An object employee
-	 * @return The employee object saved
+	 * Read - Récupération d'une liste de coordonnées selon l'id d'une étape
+	 * @param id l'id de l'étape
+	 * @return une liste de coordonnées
 	 */
 
-	public List<CoordonneesEtape> createParours(List<CoordonneesEtape> coordonnees) {
-		return coordEtapeService.saveCoordonnees(coordonnees);
-	}
-	
-	
-	/**
-	 * Read - Get one employee 
-	 * @param id The id of the employee
-	 * @return An Employee object full filled
-	 */
-
-	public List<CoordonneesEtape> getEtape(final Long id) {
+	public List<CoordonneesEtape> getCoordonnnesByEtapeId(final Long id) {
 		Optional<List<CoordonneesEtape>> coordonnees = coordEtapeService.getCoordonneesByEtape(id);
 		if(coordonnees.isPresent()) {
 			return coordonnees.get();
@@ -39,17 +28,17 @@ public class CoordEtapeControler {
 	}
 	
 	/**
-	 * Read - Get all employees
-	 * @return - An Iterable object of Employee full filled
+	 * Read - Récupérer toutes les coordonnées
+	 * @return - un Iterable de coordonnées
 	 */
-	public Iterable<CoordonneesEtape> getParcours() {
+	public Iterable<CoordonneesEtape> getCoordonnees() {
 		return coordEtapeService.getCoordonnees();
 	}
 	
 	
 	/**
-	 * Delete - Delete an employee
-	 * @param id - The id of the employee to delete
+	 * Delete - Supprimer les coordonnees d'une étape
+	 * @param id - l'id de l'étape des coordonnées à supprimer
 	 */
 	public void deleteCoordonnees(final Long id) {
 		

@@ -29,8 +29,6 @@ public class CoordEtapeService {
 	
 	@Transactional
 	public void deleteCoordonnees(final Long etapeId) {
-		System.out.println("Suppression coordonnes");
-		System.out.println(etapeId);
 		coordEtapeRepository.deleteByEtapeId(etapeId);
 	}
 	

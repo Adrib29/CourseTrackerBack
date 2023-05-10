@@ -14,43 +14,27 @@ public class CoordParcoursControler {
 	private CoordParcoursService coordparcoursService;
 	
 	/**
-	 * Create - Add a new employee
-	 * @param employee An object employee
-	 * @return The employee object saved
+	 * Create - Ajouter une liste de coordonnées
+	 * @param la liste de coordonnées à sauvegarder
+	 * @return la liste de coordonnées sauvegardée
 	 */
 
 	public List<Coordonnees> createParours(List<Coordonnees> coordonnees) {
 		return coordparcoursService.saveCoordonnees(coordonnees);
 	}
 	
-	
 	/**
-	 * Read - Get one employee 
-	 * @param id The id of the employee
-	 * @return An Employee object full filled
+	 * Read - Récupération de toutes les coordonées
+	 * @return - Un itérable de coordonnées
 	 */
-
-	public List<Coordonnees> getParcours(final Long id) {
-		Optional<List<Coordonnees>> coordonnees = coordparcoursService.getCoordonneesByParcours(id);
-		if(coordonnees.isPresent()) {
-			return coordonnees.get();
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * Read - Get all employees
-	 * @return - An Iterable object of Employee full filled
-	 */
-	public Iterable<Coordonnees> getParcours() {
+	public Iterable<Coordonnees> getCoordonnees() {
 		return coordparcoursService.getCoordonnees();
 	}
 	
 	
 	/**
-	 * Delete - Delete an employee
-	 * @param id - The id of the employee to delete
+	 * Delete - Supression des coordonées d'un parcours
+	 * @param id - L'id du parcours où supprimer les coordonnées
 	 */
 	public void deleteCoordonnees( final Long id) {
 		coordparcoursService.deleteCoordonnees(id);

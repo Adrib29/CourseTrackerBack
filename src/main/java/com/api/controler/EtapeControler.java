@@ -1,5 +1,6 @@
 package com.api.controler;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +29,12 @@ public class EtapeControler {
 	private CoordEtapeService coordEtapeService;
 	@Autowired
 	private ParcoursService parcoursService;
+	
+	
 	/**
-	 * Create - Add a new employee
-	 * @param employee An object employee
-	 * @return The employee object saved
+	 * Create - Creer une nouvelle étape
+	 * @param l'id du parcours auquelle on ajoute l'étape, l'étape à ajouter
+	 * @return L'étape ajoutée
 	 */
 	@PostMapping("/parcours/{parcoursId}/etape")
 	public Etape createEtape(@PathVariable("parcoursId") final Long id, @RequestBody Etape etape) {	
@@ -39,6 +42,7 @@ public class EtapeControler {
 		Optional<Parcours> p =  parcoursService.getParcours(id);
 		if(p.isPresent()) {
 			etape.setParcours(p.get());	
+			etape.setDuree(etapeService.calculDuree(etape.getStartDate(), etape.getEndDate()));
 			return etapeService.saveEtape(etape);
 		}
 		
@@ -47,10 +51,9 @@ public class EtapeControler {
 	
 	
 	/**
-	 * Read - Get one employee 
-	 * @param id The id of the employee
-	 * @return An Employee object full filled
-	 * /parcours/{parcoursId}
+	 * Read - Récupérer une étape
+	 * @param l'id de l'étape à récupérer
+	 * @return une étape
 	 */
 	@GetMapping("/etape/{etapeId}")
 	public Etape getEtape(@PathVariable("etapeId") final Long etapeId) {
@@ -64,8 +67,8 @@ public class EtapeControler {
 	}
 	
 	/**
-	 * Read - Get all employees
-	 * @return - An Iterable object of Employee full filled
+	 * Read - Récupération de toutes les étapes d'un parcours
+	 * @return - un itérable d'étapes lié a un parcours (id)
 	 */
 	@GetMapping("/parcours/{id}/etape")
 	public Iterable<Etape> getEtapebyParcoursId(@PathVariable("id") final Long id) {
@@ -78,36 +81,49 @@ public class EtapeControler {
 		}
 	}
 	
+	
 	/**
-	 * Update - Update an existing employee
-	 * @param id - The id of the employee to update
-	 * @param employee - The employee object updated
-	 * @return
+	 * Update - Mise a jour d'une étape existante
+	 * @param id - l'id de l'étape et du parcours auquel il est lié
+	 * @return retourne l'étape mise à jour
 	 */
 	@PutMapping("parcours/{parcoursId}/etape/{etapeId}")
 	public Etape updateEtape(@PathVariable("etapeId") final Long etapeId, @RequestBody Etape etape) {
+		
 		Optional<Etape> e = etapeService.getEtape(etapeId);
+		
 		if(e.isPresent()) {
 			Etape currentEtape = e.get();
 			
-			List<CoordonneesEtape> list = etape.getCoordonneesList();
-
-			if(list != null) {
-				//currentParcours.setCoordonneesList(list);
-				for(CoordonneesEtape c : list) {
-					c.setEtape(currentEtape);
+			List<CoordonneesEtape> actualList = currentEtape.getCoordonneesList();
+			List<CoordonneesEtape> newList = etape.getCoordonneesList();
+			
+			//Mise à jour des coordonnées si la nouvelle list est non nulle et différente de la list actuelle
+			if(newList != null) {
+				if(!etapeService.listsAreEquals(actualList, newList)) {
+					for(CoordonneesEtape c : newList) {
+						c.setEtape(currentEtape);
+					}
+					System.out.println("******************************Modification liste**********************************");
+					System.out.println("******************************Modification liste**********************************");
+					System.out.println("******************************Modification liste**********************************");
+					System.out.println("******************************Modification liste**********************************");
+					System.out.println("******************************Modification liste**********************************");
+					System.out.println("******************************Modification liste**********************************");
+					System.out.println("******************************Modification liste**********************************");
+					//Supression des coordonnées de l'étape
+					coordEtapeService.deleteCoordonnees(etapeId);
+					coordEtapeService.saveCoordonnees(newList);
 				}
-				//Supression des coordonnées de l'étape
-				coordEtapeService.deleteCoordonnees(etapeId);
-				coordEtapeService.saveCoordonnees(list);
-				System.out.println("saved");
-				currentEtape.setDistance(etape.getDistance());
 			}
 			
+			currentEtape.setDistance(etape.getDistance());
 			currentEtape.setStartDate(etape.getStartDate());
 			currentEtape.setEndDate(etape.getEndDate());
-			
+			currentEtape.setDuree(etapeService.calculDuree(currentEtape.getStartDate(), currentEtape.getEndDate()));
+			currentEtape.setVitesse(etapeService.calculVitesse(currentEtape.getDuree(), currentEtape.getDistance()));
 			etapeService.saveEtape(currentEtape);
+			
 			return currentEtape;
 			
 		} else {
@@ -117,8 +133,8 @@ public class EtapeControler {
 	
 	
 	/**
-	 * Delete - Delete an employee
-	 * @param id - The id of the employee to delete
+	 * Delete - Supression d'une étape
+	 * @param id - l'id de l'étape à supprimer
 	 */
 	@DeleteMapping("/etape/{id}")
 	public void deleteParcours(@PathVariable("id") final Long id) {
